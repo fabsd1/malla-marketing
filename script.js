@@ -31,16 +31,16 @@ const cursos = [
   { codigo: "CUR28", nombre: "Gestión del Capital Humano", creditos: 3, estado: "bloqueado", requisitos: ["Teoría y Diseño Organizacional"], precedentes: [], ciclo: 4 },
   { codigo: "CUR29", nombre: "Estadística Inferencial", creditos: 5, estado: "bloqueado", requisitos: ["Estadística y Probabilidades"], precedentes: [], ciclo: 4 },
   { codigo: "CUR30", nombre: "Microeconomía", creditos: 4, estado: "bloqueado", requisitos: ["Economía General"], precedentes: [], ciclo: 4 },
-  { codigo: "CUR31", nombre: "Taller: Desarrollo de Competencias Profesionales II", creditos: 1, estado: "bloqueado", requisitos: ["Taller: Desarrollo de Competencias Profesionales II"], precedentes: [], ciclo: 4 },
+  { codigo: "CUR31", nombre: "Taller: Desarrollo de Competencias Profesionales II", creditos: 1, estado: "bloqueado", requisitos: ["Taller: Desarrollo de Competencias Profesionales I"], precedentes: [], ciclo: 4 },
 
     // CICLO 5
   { codigo: "CUR32", nombre: "Análisis de Datos II", creditos: 3, estado: "bloqueado", requisitos: ["Análisis de Datos I", "Estadística Inferencial"], precedentes: [], ciclo: 5 },
   { codigo: "CUR33", nombre: "Electivo II", creditos: 3, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 5 },
   { codigo: "CUR34", nombre: "Electivo III", creditos: 3, estado: "bloqueado", requisitos: [], precedentes: ["Comportamiento del Consumidor"], ciclo: 5 },
-  { codigo: "CUR35", nombre: "Estrategias de Segmentación y Posicionamiento", creditos: 4, estado: "bloqueado", requisitos: ["80 créditos aprobados"], precedentes: [], ciclo: 5 },
+  { codigo: "CUR35", nombre: "Estrategias de Segmentación y Posicionamiento", creditos: 4, estado: "bloqueado", requisitos: ["80"], precedentes: [], ciclo: 5 },
   { codigo: "CUR36", nombre: "Investigación Cualitativa de Mercados", creditos: 4, estado: "bloqueado", requisitos: ["Estadística Inferencial", "Comportamiento del Consumidor"], precedentes: [], ciclo: 5 },
   { codigo: "CUR37", nombre: "Finanzas II", creditos: 4, estado: "bloqueado", requisitos: ["Finanzas I"], precedentes: [], ciclo: 5 },
-  { codigo: "CUR38", nombre: "Taller: Desarrollo de Competencias Personales III", creditos: 1, estado: "bloqueado", requisitos: ["Taller: Desarrollo de Competencias Profesionales II"], precedentes: [], ciclo: 5 },
+  { codigo: "CUR38", nombre: "Taller: Desarrollo de Competencias Personales III", creditos: 1, estado: "bloqueado", requisitos: ["Taller: Desarrollo de Competencias Personales II"], precedentes: [], ciclo: 5 },
 
   // CICLO 6
   { codigo: "CUR39", nombre: "Canales y Estrategias de Distribución", creditos: 4, estado: "bloqueado", requisitos: [], precedentes: ["Estrategias de Segmentación y Posicionamiento"], ciclo: 6 },
@@ -58,15 +58,15 @@ const cursos = [
   { codigo: "CUR49", nombre: "Gestión de Ventas", creditos: 3, estado: "bloqueado", requisitos: ["Investigación Cualitativa de Mercados"], precedentes: [], ciclo: 7 },
   { codigo: "CUR50", nombre: "Investigación Cuantitativa con Modelos Multivariados", creditos: 3, estado: "bloqueado", requisitos: ["Investigación Cuantitativa de Mercados"], precedentes: [], ciclo: 7 },
   { codigo: "CUR51", nombre: "Metodología de la Investigación", creditos: 3, estado: "bloqueado", requisitos: ["105 créditos aprobados"], precedentes: [], ciclo: 7 },
-  { codigo: "CUR52", nombre: "Taller: Desarrollo de Competencias Personales IV", creditos: 1, estado: "bloqueado", requisitos: ["Taller: Desarrollo de Competencias Profesionales III"], precedentes: [], ciclo: 7 },
+  { codigo: "CUR52", nombre: "Taller: Desarrollo de Competencias Personales IV", creditos: 1, estado: "bloqueado", requisitos: ["Taller: Desarrollo de Competencias Personales III"], precedentes: [], ciclo: 7 },
 
   // CICLO 8
-  { codigo: "CUR53", nombre: "Electivo VI", creditos: 1.5, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 8 },
+  { codigo: "CUR53", nombre: "Electivo VI", creditos: 3, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 8 },
   { codigo: "CUR54", nombre: "Electivo Internacional I", creditos: 1.5, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 8 },
   { codigo: "CUR55", nombre: "Electivo Internacional II", creditos: 1.5, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 8 },
-  { codigo: "CUR56", nombre: "Entrepreneurship", creditos: 4, estado: "bloqueado", requisitos: ["140 créditos aprobados"], precedentes: [], ciclo: 8 },
-  { codigo: "CUR57", nombre: "Gerencia de Operaciones", creditos: 3, estado: "bloqueado", requisitos: ["100 créditos aprobados"], precedentes: [], ciclo: 8 },
-  { codigo: "CUR58", nombre: "Global Marketing", creditos: 4, estado: "bloqueado", requisitos: ["140 créditos aprobados"], precedentes: [], ciclo: 8 },
+  { codigo: "CUR56", nombre: "Entrepreneurship", creditos: 4, estado: "bloqueado", requisitos: ["140"], precedentes: [], ciclo: 8 },
+  { codigo: "CUR57", nombre: "Gerencia de Operaciones", creditos: 3, estado: "bloqueado", requisitos: ["100"], precedentes: [], ciclo: 8 },
+  { codigo: "CUR58", nombre: "Global Marketing", creditos: 4, estado: "bloqueado", requisitos: ["140"], precedentes: [], ciclo: 8 },
   { codigo: "CUR59", nombre: "Inteligencia de Negocios Aplicada", creditos: 4, estado: "bloqueado", requisitos: ["Investigación Cuantitativa de Mercados"], precedentes: [], ciclo: 8 },
   { codigo: "CUR60", nombre: "Taller: Desarrollo de Competencias Profesionales IV", creditos: 1, estado: "bloqueado", requisitos: ["Taller: Desarrollo de Competencias Profesionales III"], precedentes: [], ciclo: 8 },
 
@@ -77,12 +77,12 @@ const cursos = [
   { codigo: "CUR64", nombre: "Electivo X", creditos: 3, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 9 },
   { codigo: "CUR65", nombre: "Electivo XI", creditos: 3, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 9 },
   { codigo: "CUR66", nombre: "E - Marketing", creditos: 3, estado: "bloqueado", requisitos: ["Comunicaciones del Marketing"], precedentes: [], ciclo: 9 },
-  { codigo: "CUR67", nombre: "Taller: Desarrollo de Competencias Personales V", creditos: 1, estado: "bloqueado", requisitos: ["Taller: Desarrollo de Competencias Profesionales IV"], precedentes: [], ciclo: 9 },
-  { codigo: "CUR68", nombre: "Trabajo de Tesis I", creditos: 3, estado: "bloqueado", requisitos: ["140 créditos aprobados", "Metodología de la Investigación"], precedentes: [], ciclo: 9 },
+  { codigo: "CUR67", nombre: "Taller: Desarrollo de Competencias Personales V", creditos: 1, estado: "bloqueado", requisitos: ["Taller: Desarrollo de Competencias Personales IV"], precedentes: [], ciclo: 9 },
+  { codigo: "CUR68", nombre: "Trabajo de Tesis I", creditos: 3, estado: "bloqueado", requisitos: ["140", "Metodología de la Investigación"], precedentes: [], ciclo: 9 },
 
   // CICLO 10
   { codigo: "CUR69", nombre: "Branding", creditos: 3, estado: "bloqueado", requisitos: ["Comunicaciones del Marketing"], precedentes: [], ciclo: 10 },
-  { codigo: "CUR70", nombre: "Dirección Estratégica de Marketing", creditos: 4, estado: "bloqueado", requisitos: ["175 créditos aprobados"], precedentes: [], ciclo: 10 },
+  { codigo: "CUR70", nombre: "Dirección Estratégica de Marketing", creditos: 4, estado: "bloqueado", requisitos: ["175"], precedentes: [], ciclo: 10 },
   { codigo: "CUR71", nombre: "Electivo XII", creditos: 3, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 10 },
   { codigo: "CUR72", nombre: "Electivo XIII", creditos: 3, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 10 },
   { codigo: "CUR73", nombre: "Electivo XIV", creditos: 3, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 10 },
