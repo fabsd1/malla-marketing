@@ -50,3 +50,24 @@ h1 {
   width: 0%;
   transition: width 0.5s;
 }
+.fila-malla {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding: 20px 0;
+}
+
+.columna-ciclo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 200px;
+}
+
+.columna-ciclo h3 {
+  text-align: center;
+  margin-bottom: 5px;
+  font-size: 16px;
+  color: #333;
+}
