@@ -12,7 +12,7 @@ const cursos = [
   { codigo: "CUR08", nombre: "Cálculo I", creditos: 4, estado: "bloqueado", requisitos: ["Pre Cálculo"], precedentes: [], ciclo: 2 },
   { codigo: "CUR09", nombre: "Contabilidad General", creditos: 3, estado: "bloqueado", requisitos: ["Administración General"], precedentes: [], ciclo: 2 },
   { codigo: "CUR10", nombre: "Comunicación y Literatura II", creditos: 3, estado: "bloqueado", requisitos: ["Comunicación y Literatura I"], precedentes: [], ciclo: 2 },
-  { codigo: "CUR11", nombre: "Estadística y Probabilidades", creditos: 4, estado: "bloqueado", requisitos: ["Pre Cálculo"], precedentes: [], ciclo: 2 },
+  { codigo: "CUR11", nombre: "Estadística y Probabilidades", creditos: 3, estado: "bloqueado", requisitos: ["Pre Cálculo"], precedentes: [], ciclo: 2 },
   { codigo: "CUR12", nombre: "Fundamentos de Marketing", creditos: 3, estado: "bloqueado", requisitos: ["Administración General"], precedentes: [], ciclo: 2 },
   { codigo: "CUR13", nombre: "Taller: Desarrollo de Competencias Profesionales I", creditos: 1, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 2 },
 
@@ -96,10 +96,12 @@ let creditosAprobados = 0;
 function actualizarVista() {
   const malla = document.getElementById("malla");
   malla.innerHTML = "";
+  creditosAprobados = cursos.reduce((sum, c) => c.estado === "aprobado" ? sum + c.creditos : sum, 0);
 
   for (let ciclo = 1; ciclo <= 10; ciclo++) {
     const columna = document.createElement("div");
     columna.className = "columna";
+
     const titulo = document.createElement("h2");
     titulo.textContent = `Ciclo ${ciclo}`;
     columna.appendChild(titulo);
@@ -138,12 +140,20 @@ function actualizarVista() {
 }
 
 function puedeDesbloquear(curso) {
-  const requisitosOK = curso.requisitos.every(nom =>
-    cursos.find(c => c.nombre === nom && c.estado === "aprobado")
-  );
-  const precedentesOK = curso.precedentes.every(nom =>
-    cursos.find(c => c.nombre === nom && (c.estado === "aprobado" || c.estado === "llevado"))
-  );
+  const requisitosOK = curso.requisitos.every(req => {
+    if (!isNaN(parseFloat(req))) {
+      return creditosAprobados >= parseFloat(req);
+    } else {
+      const reqCurso = cursos.find(c => c.nombre === req);
+      return reqCurso && reqCurso.estado === "aprobado";
+    }
+  });
+
+  const precedentesOK = curso.precedentes.every(req => {
+    const precCurso = cursos.find(c => c.nombre === req);
+    return precCurso && (precCurso.estado === "aprobado" || precCurso.estado === "llevado");
+  });
+
   return requisitosOK && precedentesOK;
 }
 
