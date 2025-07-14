@@ -96,30 +96,61 @@ let creditosTotales = cursos.reduce((sum, c) => sum + c.creditos, 0);
 let creditosAprobados = 0;
 
 function actualizarVista() {
-  const malla = document.getElementById("malla");
-  malla.innerHTML = "";
+  const contenedor = document.getElementById("contenedor-ciclos");
+  contenedor.innerHTML = "";
 
-  cursos.forEach((curso, i) => {
-    const div = document.createElement("div");
-    div.className = "curso";
-    div.textContent = `${curso.nombre} (${curso.creditos} cr)`;
-
-    if (curso.estado === "aprobado") {
-      div.classList.add("aprobado");
-    } else if (!puedeDesbloquear(curso)) {
-      div.classList.add("bloqueado");
+  const ciclos = {}; // Agrupar cursos por ciclo
+  cursos.forEach(curso => {
+    if (!ciclos[curso.ciclo]) {
+      ciclos[curso.ciclo] = [];
     }
+    ciclos[curso.ciclo].push(curso);
+  });
 
-    div.onclick = () => {
-      if (!puedeDesbloquear(curso)) return;
+  Object.keys(ciclos).forEach(ciclo => {
+    const columna = document.createElement("div");
+    columna.className = "columna-ciclo";
 
-      if (curso.estado !== "aprobado") {
-        curso.estado = "aprobado";
-        creditosAprobados += curso.creditos;
+    const titulo = document.createElement("h3");
+    titulo.textContent = `Ciclo ${ciclo}`;
+    columna.appendChild(titulo);
+
+    ciclos[ciclo].forEach(curso => {
+      const div = document.createElement("div");
+      div.className = "curso";
+      div.textContent = `${curso.nombre} (${curso.creditos} cr)`;
+
+      if (curso.estado === "aprobado") {
+        div.classList.add("aprobado");
+      } else if (!puedeDesbloquear(curso)) {
+        div.classList.add("bloqueado");
       }
 
-      actualizarVista();
-    };
+      div.onclick = () => {
+        if (!puedeDesbloquear(curso)) return;
+
+        if (curso.estado !== "aprobado") {
+          curso.estado = "aprobado";
+          creditosAprobados += curso.creditos;
+        } else {
+          curso.estado = "bloqueado";
+          creditosAprobados -= curso.creditos;
+        }
+
+        actualizarVista();
+      };
+
+      columna.appendChild(div);
+    });
+
+    contenedor.appendChild(columna);
+  });
+
+  document.getElementById("creditos-aprobados").textContent = creditosAprobados;
+  document.getElementById("creditos-faltantes").textContent = creditosTotales - creditosAprobados;
+  document.getElementById("barra").style.width = `${(creditosAprobados / creditosTotales) * 100}%`;
+}
+
 
     malla.appendChild(div);
   });
