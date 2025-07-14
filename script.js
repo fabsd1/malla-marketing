@@ -1,15 +1,96 @@
 const cursos = [
-  {"codigo": "CUR001", "nombre": "Administración General", "creditos": 4, "estado": "aprobado", "requisitos": [], "precedentes": []},
-  {"codigo": "CUR002", "nombre": "Análisis de Datos I", "creditos": 3, "estado": "bloqueado", "requisitos": [], "precedentes": []},
-  {"codigo": "CUR003", "nombre": "Comunicación y Literatura I", "creditos": 3, "estado": "bloqueado", "requisitos": [], "precedentes": []},
-  {"codigo": "CUR004", "nombre": "Filosofía y Ética", "creditos": 3, "estado": "bloqueado", "requisitos": [], "precedentes": []},
-  {"codigo": "CUR005", "nombre": "Pensamiento Crítico", "creditos": 2, "estado": "bloqueado", "requisitos": [], "precedentes": []},
-  {"codigo": "CUR006", "nombre": "Pre Cálculo", "creditos": 3, "estado": "bloqueado", "requisitos": [], "precedentes": []},
-  {"codigo": "CUR007", "nombre": "Taller: Desarrollo de Competencias Personales I", "creditos": 1, "estado": "bloqueado", "requisitos": [], "precedentes": []},
-  {"codigo": "CUR008", "nombre": "Cálculo I", "creditos": 4, "estado": "bloqueado", "requisitos": ["Pre Cálculo"], "precedentes": []},
-  {"codigo": "CUR009", "nombre": "Contabilidad General", "creditos": 3, "estado": "bloqueado", "requisitos": ["Administración General"], "precedentes": []},
-  {"codigo": "CUR010", "nombre": "Comunicación y Literatura II", "creditos": 3, "estado": "bloqueado", "requisitos": ["Comunicación y Literatura I"], "precedentes": []}
+  {
+    "codigo": "CUR01",
+    "nombre": "Administración General",
+    "creditos": 4,
+    "estado": "aprobado",
+    "requisitos": [],
+    "precedentes": [],
+    "ciclo": 1
+  },
+  {
+    "codigo": "CUR02",
+    "nombre": "Análisis de Datos I",
+    "creditos": 3,
+    "estado": "bloqueado",
+    "requisitos": [],
+    "precedentes": [],
+    "ciclo": 1
+  },
+  {
+    "codigo": "CUR03",
+    "nombre": "Comunicación y Literatura I",
+    "creditos": 3,
+    "estado": "bloqueado",
+    "requisitos": [],
+    "precedentes": [],
+    "ciclo": 1
+  },
+  {
+    "codigo": "CUR04",
+    "nombre": "Filosofía y Ética",
+    "creditos": 3,
+    "estado": "bloqueado",
+    "requisitos": [],
+    "precedentes": [],
+    "ciclo": 1
+  },
+  {
+    "codigo": "CUR05",
+    "nombre": "Pensamiento Crítico",
+    "creditos": 2,
+    "estado": "bloqueado",
+    "requisitos": [],
+    "precedentes": [],
+    "ciclo": 1
+  },
+  {
+    "codigo": "CUR06",
+    "nombre": "Pre Cálculo",
+    "creditos": 3,
+    "estado": "bloqueado",
+    "requisitos": [],
+    "precedentes": [],
+    "ciclo": 1
+  },
+  {
+    "codigo": "CUR07",
+    "nombre": "Taller: Desarrollo de Competencias Personales I",
+    "creditos": 1,
+    "estado": "bloqueado",
+    "requisitos": [],
+    "precedentes": [],
+    "ciclo": 1
+  },
+  {
+    "codigo": "CUR08",
+    "nombre": "Cálculo I",
+    "creditos": 4,
+    "estado": "bloqueado",
+    "requisitos": [],
+    "precedentes": [],
+    "ciclo": 2
+  },
+  {
+    "codigo": "CUR09",
+    "nombre": "Contabilidad General",
+    "creditos": 3,
+    "estado": "bloqueado",
+    "requisitos": [],
+    "precedentes": [],
+    "ciclo": 2
+  },
+  {
+    "codigo": "CUR10",
+    "nombre": "Comunicación y Literatura II",
+    "creditos": 3,
+    "estado": "bloqueado",
+    "requisitos": [],
+    "precedentes": [],
+    "ciclo": 2
+  }
 ];
+
 
 let creditosTotales = cursos.reduce((sum, c) => sum + c.creditos, 0);
 let creditosAprobados = 0;
