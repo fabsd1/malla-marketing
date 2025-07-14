@@ -93,10 +93,17 @@ const cursos = [
 const creditosTotales = cursos.reduce((sum, c) => sum + c.creditos, 0);
 let creditosAprobados = 0;
 
+const estadoGuardado = JSON.parse(localStorage.getItem("estadoCursos")) || {};
+cursos.forEach(c => {
+  if (estadoGuardado[c.codigo]) {
+    c.estado = estadoGuardado[c.codigo];
+  }
+});
+
 function actualizarVista() {
+  creditosAprobados = 0;
   const malla = document.getElementById("malla");
   malla.innerHTML = "";
-  creditosAprobados = cursos.reduce((sum, c) => c.estado === "aprobado" ? sum + c.creditos : sum, 0);
 
   for (let ciclo = 1; ciclo <= 10; ciclo++) {
     const columna = document.createElement("div");
@@ -113,6 +120,7 @@ function actualizarVista() {
 
       if (curso.estado === "aprobado") {
         div.classList.add("aprobado");
+        creditosAprobados += curso.creditos;
       } else if (!puedeDesbloquear(curso)) {
         div.classList.add("bloqueado");
       }
@@ -125,6 +133,7 @@ function actualizarVista() {
           curso.estado = "aprobado";
           creditosAprobados += curso.creditos;
         }
+        guardarProgreso();
         actualizarVista();
       };
 
@@ -136,25 +145,29 @@ function actualizarVista() {
 
   document.getElementById("creditos-aprobados").textContent = creditosAprobados;
   document.getElementById("creditos-faltantes").textContent = creditosTotales - creditosAprobados;
-  document.getElementById("barra").style.width = `${(creditosAprobados / creditosTotales) * 100}%`;
+  const porcentaje = ((creditosAprobados / creditosTotales) * 100).toFixed(1);
+  document.getElementById("barra").style.width = `${porcentaje}%`;
+  document.getElementById("porcentaje").textContent = `${porcentaje}% completado`;
 }
 
 function puedeDesbloquear(curso) {
-  const requisitosOK = curso.requisitos.every(req => {
-    if (!isNaN(parseFloat(req))) {
-      return creditosAprobados >= parseFloat(req);
-    } else {
-      const reqCurso = cursos.find(c => c.nombre === req);
-      return reqCurso && reqCurso.estado === "aprobado";
-    }
-  });
+  const requisitosOk = curso.requisitos.every(req =>
+    isNaN(req)
+      ? cursos.find(c => c.nombre === req)?.estado === "aprobado"
+      : creditosAprobados >= parseInt(req)
+  );
 
-  const precedentesOK = curso.precedentes.every(req => {
-    const precCurso = cursos.find(c => c.nombre === req);
-    return precCurso && (precCurso.estado === "aprobado" || precCurso.estado === "llevado");
-  });
+  const precedentesOk = curso.precedentes.every(pre =>
+    cursos.find(c => c.nombre === pre && (c.estado === "aprobado" || c.estado === "llevado"))
+  );
 
-  return requisitosOK && precedentesOK;
+  return requisitosOk && precedentesOk;
+}
+
+function guardarProgreso() {
+  const estado = {};
+  cursos.forEach(c => (estado[c.codigo] = c.estado));
+  localStorage.setItem("estadoCursos", JSON.stringify(estado));
 }
 
 actualizarVista();
