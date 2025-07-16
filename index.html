@@ -21,5 +21,32 @@
   </div>
 
   <script src="script.js"></script>
-</body>
+</body><!-- Firebase App (necesario para todos los servicios de Firebase) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+
+<!-- Firebase Auth -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
+
+<!-- Firebase Firestore -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
+
+<script>
+  // Tu configuración de Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyC9RPJLHeitv1vzCX24yR5WbszNpmHBw7WW",
+    authDomain: "mimallainteractiva.firebaseapp.com",
+    projectId: "mimallainteractiva",
+    storageBucket: "mimallainteractiva.appspot.com",
+    messagingSenderId: "521145563333",
+    appId: "1:521145563333:web:13678978de9de017c3d8ac"
+  };
+
+  // Inicializar Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  // Inicializar Firestore y Auth
+  const db = firebase.firestore();
+  const auth = firebase.auth();
+</script>
+
 </html>
