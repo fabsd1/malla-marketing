@@ -34,7 +34,7 @@ const cursos = [
   { codigo: "CUR31", nombre: "Taller: Desarrollo de Competencias Profesionales II", creditos: 1, estado: "bloqueado", requisitos: ["Taller: Desarrollo de Competencias Profesionales I"], precedentes: [], ciclo: 4 },
 
     // CICLO 5
-  { codigo: "CUR32", nombre: "Análisis de Datos II", creditos: 3, estado: "bloqueado", requisitos: ["Análisis de Datos I", "Estadística Inferencial"], precedentes: [], ciclo: 5 },
+  { codigo: "CUR32", nombre: "Análisis de Datos II", creditos: 3, estado: "bloqueado", requisitos: ["Análisis de Datos I"], precedentes: [], ciclo: 5 },
   { codigo: "CUR33", nombre: "Electivo II", creditos: 3, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 5 },
   { codigo: "CUR34", nombre: "Electivo III", creditos: 3, estado: "bloqueado", requisitos: [], precedentes: ["Comportamiento del Consumidor"], ciclo: 5 },
   { codigo: "CUR35", nombre: "Estrategias de Segmentación y Posicionamiento", creditos: 4, estado: "bloqueado", requisitos: ["80"], precedentes: [], ciclo: 5 },
