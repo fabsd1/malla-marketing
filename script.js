@@ -45,7 +45,7 @@ const cursos = [
   // CICLO 6
   { codigo: "CUR39", nombre: "Canales y Estrategias de Distribución", creditos: 4, estado: "bloqueado", requisitos: [], precedentes: ["Estrategias de Segmentación y Posicionamiento"], ciclo: 6 },
   { codigo: "CUR40", nombre: "Costeo y Estrategias de Precios", creditos: 4, estado: "bloqueado", requisitos: ["Costos y Presupuestos"], precedentes: [], ciclo: 6 },
-  { codigo: "CUR41", nombre: "Derecho Empresarial", creditos: 4, estado: "bloqueado", requisitos: ["80 créditos aprobados"], precedentes: [], ciclo: 6 },
+  { codigo: "CUR41", nombre: "Derecho Empresarial", creditos: 4, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 6 },
   { codigo: "CUR42", nombre: "Investigación Cuantitativa de Mercados", creditos: 4, estado: "bloqueado", requisitos: ["Investigación Cualitativa de Mercados"], precedentes: [], ciclo: 6 },
   { codigo: "CUR43", nombre: "Gestión de Proyectos de Lanzamiento de Producto", creditos: 4, estado: "bloqueado", requisitos: ["Estrategias de Segmentación y Posicionamiento"], precedentes: [], ciclo: 6 },
   { codigo: "CUR44", nombre: "Marketing de Servicios y Retail", creditos: 4, estado: "bloqueado", requisitos: ["Estrategias de Segmentación y Posicionamiento"], precedentes: [], ciclo: 6 },
