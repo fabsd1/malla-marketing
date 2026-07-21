@@ -1,53 +1,71 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Malla Interactiva - Admin y Marketing</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Malla Curricular · Administración y Marketing — ESAN</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Malla Curricular - Admin y Marketing</h1>
 
-  <div id="resumen"><span id="porcentaje" style="margin-left: 10px; font-weight: bold;"></span>
-    <p>Créditos aprobados: <span id="creditos-aprobados">0</span></p>
-    <p>Créditos faltantes: <span id="creditos-faltantes">0</span></p>
-    <div class="barra-progreso">
-      <div class="progreso" id="barra"></div>
+<header class="hero">
+  <div class="hero-inner">
+    <p class="eyebrow">Universidad ESAN · Plan aprobado por Acuerdo N°011-03/2023</p>
+    <h1>Malla curricular<br />Administración y Marketing</h1>
+    <p class="hero-sub">Marca cada curso como aprobado y tu avance se calcula solo.</p>
+  </div>
+</header>
+
+<main>
+  <section class="resumen" aria-label="Resumen de avance">
+    <div class="resumen-pct">
+      <span id="pct-label" class="pct-num">0%</span>
+      <span class="pct-caption">de la carrera completada</span>
     </div>
-  </div>
 
-  <div class="contenedor-ciclos" id="malla">
-    <!-- Aquí se cargan los cursos automáticamente -->
-  </div>
+    <div class="resumen-derecha">
+      <div class="barra-progreso" role="progressbar" aria-label="Progreso de créditos" aria-valuemin="0" aria-valuemax="100">
+        <div id="barra-fill" class="barra-fill"></div>
+      </div>
 
-  <script src="script.js"></script>
-  <!-- Firebase App (necesario para todos los servicios de Firebase) -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+      <div class="ruta" id="ruta" aria-hidden="true"></div>
 
-<!-- Firebase Auth -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
+      <dl class="stats">
+        <div class="stat">
+          <dt>Créditos totales</dt>
+          <dd id="creditos-totales">0</dd>
+        </div>
+        <div class="stat">
+          <dt>Créditos aprobados</dt>
+          <dd id="creditos-aprobados">0</dd>
+        </div>
+        <div class="stat">
+          <dt>Créditos pendientes</dt>
+          <dd id="creditos-pendientes">0</dd>
+        </div>
+        <div class="stat">
+          <dt>Cursos</dt>
+          <dd id="cursos-label">0 / 0</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
 
-<!-- Firebase Firestore -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
+  <section class="malla" id="malla" aria-label="Cursos por ciclo">
+    <!-- generado por script.js -->
+  </section>
+</main>
 
-<script>
-  // Tu configuración de Firebase
-  const firebaseConfig = {
-    apiKey: "AIzaSyC9RPJLHeitv1vzCX24yR5WbszNpmHBw7WW",
-    authDomain: "mimallainteractiva.firebaseapp.com",
-    projectId: "mimallainteractiva",
-    storageBucket: "mimallainteractiva.appspot.com",
-    messagingSenderId: "521145563333",
-    appId: "1:521145563333:web:13678978de9de017c3d8ac"
-  };
+<footer>
+  <p>212 créditos en la especialidad · 10 ciclos + ciclo introductorio · Tu avance se guarda en este navegador.</p>
+</footer>
 
-  // Inicializar Firebase
-  firebase.initializeApp(firebaseConfig);
-
-  // Inicializar servicios
-  const db = firebase.firestore();
-  const auth = firebase.auth();
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>

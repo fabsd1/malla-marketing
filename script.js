@@ -1,173 +1,282 @@
-const cursos = [
-  // CICLO 1
-  { codigo: "CUR01", nombre: "Administración General", creditos: 4, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 1 },
-  { codigo: "CUR02", nombre: "Análisis de Datos I", creditos: 3, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 1 },
-  { codigo: "CUR03", nombre: "Comunicación y Literatura I", creditos: 3, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 1 },
-  { codigo: "CUR04", nombre: "Filosofía y Ética", creditos: 3, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 1 },
-  { codigo: "CUR05", nombre: "Pensamiento Crítico", creditos: 2, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 1 },
-  { codigo: "CUR06", nombre: "Pre Cálculo", creditos: 3, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 1 },
-  { codigo: "CUR07", nombre: "Taller: Desarrollo de Competencias Personales I", creditos: 1, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 1 },
+/* ============================================================
+   Malla curricular — Administración y Marketing (ESAN)
+   Plan de estudios aprobado por Acuerdo N°011-03/2023
+   ============================================================ */
 
-  // CICLO 2
-  { codigo: "CUR08", nombre: "Cálculo I", creditos: 4, estado: "bloqueado", requisitos: ["Pre Cálculo"], precedentes: [], ciclo: 2 },
-  { codigo: "CUR09", nombre: "Contabilidad General", creditos: 3, estado: "bloqueado", requisitos: ["Administración General"], precedentes: [], ciclo: 2 },
-  { codigo: "CUR10", nombre: "Comunicación y Literatura II", creditos: 3, estado: "bloqueado", requisitos: ["Comunicación y Literatura I"], precedentes: [], ciclo: 2 },
-  { codigo: "CUR11", nombre: "Estadística y Probabilidades", creditos: 3, estado: "bloqueado", requisitos: ["Pre Cálculo"], precedentes: [], ciclo: 2 },
-  { codigo: "CUR12", nombre: "Fundamentos de Marketing", creditos: 3, estado: "bloqueado", requisitos: ["Administración General"], precedentes: [], ciclo: 2 },
-  { codigo: "CUR13", nombre: "Taller: Desarrollo de Competencias Profesionales I", creditos: 1, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 2 },
+const slug = (s) =>
+  s
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
 
-  // CICLO 3
-  { codigo: "CUR14", nombre: "Cálculo II", creditos: 4, estado: "bloqueado", requisitos: ["Cálculo I"], precedentes: ["Cálculo I"], ciclo: 3 },
-  { codigo: "CUR15", nombre: "Comportamiento del Consumidor", creditos: 4, estado: "bloqueado", requisitos: ["Fundamentos de Marketing"], precedentes: [], ciclo: 3 },
-  { codigo: "CUR16", nombre: "Costos y Presupuestos", creditos: 4, estado: "bloqueado", requisitos: ["Contabilidad General"], precedentes: [], ciclo: 3 },
-  { codigo: "CUR17", nombre: "Economía General", creditos: 4, estado: "bloqueado", requisitos: ["Administración General"], precedentes: ["Cálculo I"], ciclo: 3 },
-  { codigo: "CUR18", nombre: "Taller: Desarrollo de Competencias Personales II", creditos: 1, estado: "bloqueado", requisitos: ["Taller: Desarrollo de Competencias Personales I"], precedentes: [], ciclo: 3 },
-  { codigo: "CUR19", nombre: "Teoría y Diseño Organizacional", creditos: 5, estado: "bloqueado", requisitos: ["Administración General"], precedentes: [], ciclo: 3 },
+// ciclo 0 = Ciclo Introductorio (no cuenta para los 212 créditos de la especialidad)
+const CURSOS_RAW = [
+  // CICLO INTRODUCTORIO
+  { ciclo: 0, nombre: "Comunicaciones", creditos: 0, prereq: [] },
+  { ciclo: 0, nombre: "Matemáticas", creditos: 0, prereq: [] },
 
-  // CICLO 4
-  { codigo: "CUR25", nombre: "Comunicaciones del Marketing", creditos: 3, estado: "bloqueado", requisitos: ["Comportamiento del Consumidor"], precedentes: [], ciclo: 4 },
-  { codigo: "CUR26", nombre: "Electivo I", creditos: 3, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 4 },
-  { codigo: "CUR27", nombre: "Finanzas I", creditos: 4, estado: "bloqueado", requisitos: ["Contabilidad General", "Cálculo I"], precedentes: [], ciclo: 4 },
-  { codigo: "CUR28", nombre: "Gestión del Capital Humano", creditos: 3, estado: "bloqueado", requisitos: ["Teoría y Diseño Organizacional"], precedentes: [], ciclo: 4 },
-  { codigo: "CUR29", nombre: "Estadística Inferencial", creditos: 5, estado: "bloqueado", requisitos: ["Estadística y Probabilidades"], precedentes: [], ciclo: 4 },
-  { codigo: "CUR30", nombre: "Microeconomía", creditos: 4, estado: "bloqueado", requisitos: ["Economía General"], precedentes: [], ciclo: 4 },
-  { codigo: "CUR31", nombre: "Taller: Desarrollo de Competencias Profesionales II", creditos: 1, estado: "bloqueado", requisitos: ["Taller: Desarrollo de Competencias Profesionales I"], precedentes: [], ciclo: 4 },
+  // PRIMER CICLO
+  { ciclo: 1, nombre: "Administración General", creditos: 4, prereq: [] },
+  { ciclo: 1, nombre: "Análisis de Datos I", creditos: 3, prereq: [] },
+  { ciclo: 1, nombre: "Comunicación y Literatura I", creditos: 3, prereq: ["Comunicaciones"] },
+  { ciclo: 1, nombre: "Filosofía y Ética", creditos: 3, prereq: [] },
+  { ciclo: 1, nombre: "Pensamiento Crítico", creditos: 2, prereq: [] },
+  { ciclo: 1, nombre: "Pre Cálculo", creditos: 3, prereq: ["Matemáticas"] },
+  { ciclo: 1, nombre: "Taller: Desarrollo de Competencias Personales I", creditos: 1, prereq: [] },
 
-    // CICLO 5
-  { codigo: "CUR32", nombre: "Análisis de Datos II", creditos: 3, estado: "bloqueado", requisitos: ["Análisis de Datos I"], precedentes: [], ciclo: 5 },
-  { codigo: "CUR33", nombre: "Electivo II", creditos: 3, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 5 },
-  { codigo: "CUR34", nombre: "Electivo III", creditos: 3, estado: "bloqueado", requisitos: [], precedentes: ["Comportamiento del Consumidor"], ciclo: 5 },
-  { codigo: "CUR35", nombre: "Estrategias de Segmentación y Posicionamiento", creditos: 4, estado: "bloqueado", requisitos: ["80"], precedentes: [], ciclo: 5 },
-  { codigo: "CUR36", nombre: "Investigación Cualitativa de Mercados", creditos: 4, estado: "bloqueado", requisitos: ["Estadística Inferencial", "Comportamiento del Consumidor"], precedentes: [], ciclo: 5 },
-  { codigo: "CUR37", nombre: "Finanzas II", creditos: 4, estado: "bloqueado", requisitos: ["Finanzas I"], precedentes: [], ciclo: 5 },
-  { codigo: "CUR38", nombre: "Taller: Desarrollo de Competencias Personales III", creditos: 1, estado: "bloqueado", requisitos: ["Taller: Desarrollo de Competencias Personales II"], precedentes: [], ciclo: 5 },
+  // SEGUNDO CICLO
+  { ciclo: 2, nombre: "Cálculo I", creditos: 4, prereq: ["Pre Cálculo"] },
+  { ciclo: 2, nombre: "Contabilidad General", creditos: 3, prereq: ["Administración General"] },
+  { ciclo: 2, nombre: "Comunicación y Literatura II", creditos: 3, prereq: ["Comunicación y Literatura I"] },
+  { ciclo: 2, nombre: "Estadística y Probabilidades", creditos: 3, prereq: ["Pre Cálculo"] },
+  { ciclo: 2, nombre: "Fundamentos de Marketing", creditos: 3, prereq: ["Administración General"] },
+  { ciclo: 2, nombre: "Taller: Desarrollo de Competencias Profesionales I", creditos: 1, prereq: [] },
 
-  // CICLO 6
-  { codigo: "CUR39", nombre: "Canales y Estrategias de Distribución", creditos: 4, estado: "bloqueado", requisitos: [], precedentes: ["Estrategias de Segmentación y Posicionamiento"], ciclo: 6 },
-  { codigo: "CUR40", nombre: "Costeo y Estrategias de Precios", creditos: 4, estado: "bloqueado", requisitos: ["Costos y Presupuestos"], precedentes: [], ciclo: 6 },
-  { codigo: "CUR41", nombre: "Derecho Empresarial", creditos: 4, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 6 },
-  { codigo: "CUR42", nombre: "Investigación Cuantitativa de Mercados", creditos: 4, estado: "bloqueado", requisitos: ["Investigación Cualitativa de Mercados"], precedentes: [], ciclo: 6 },
-  { codigo: "CUR43", nombre: "Gestión de Proyectos de Lanzamiento de Producto", creditos: 4, estado: "bloqueado", requisitos: ["Estrategias de Segmentación y Posicionamiento"], precedentes: [], ciclo: 6 },
-  { codigo: "CUR44", nombre: "Marketing de Servicios y Retail", creditos: 4, estado: "bloqueado", requisitos: ["Estrategias de Segmentación y Posicionamiento"], precedentes: [], ciclo: 6 },
-  { codigo: "CUR45", nombre: "Taller: Desarrollo de Competencias Profesionales III", creditos: 1, estado: "bloqueado", requisitos: ["Taller: Desarrollo de Competencias Profesionales II"], precedentes: [], ciclo: 6 },
+  // TERCER CICLO
+  { ciclo: 3, nombre: "Cálculo II", creditos: 4, prereq: ["Cálculo I"] },
+  { ciclo: 3, nombre: "Comportamiento del Consumidor", creditos: 4, prereq: ["Fundamentos de Marketing"] },
+  { ciclo: 3, nombre: "Costos y Presupuestos", creditos: 4, prereq: ["Contabilidad General"] },
+  { ciclo: 3, nombre: "Economía General", creditos: 4, prereq: ["Administración General", "Cálculo I"] },
+  { ciclo: 3, nombre: "Taller: Desarrollo de Competencias Personales II", creditos: 1, prereq: ["Taller: Desarrollo de Competencias Personales I"] },
+  { ciclo: 3, nombre: "Teoría y Diseño Organizacional", creditos: 5, prereq: ["Administración General"] },
 
-  // CICLO 7
-  { codigo: "CUR46", nombre: "Electivo IV", creditos: 3, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 7 },
-  { codigo: "CUR47", nombre: "Electivo V", creditos: 3, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 7 },
-  { codigo: "CUR48", nombre: "Formulación y Evaluación de Proyectos", creditos: 4, estado: "bloqueado", requisitos: ["Finanzas II", "Costos y Presupuestos"], precedentes: [], ciclo: 7 },
-  { codigo: "CUR49", nombre: "Gestión de Ventas", creditos: 3, estado: "bloqueado", requisitos: ["Investigación Cualitativa de Mercados"], precedentes: [], ciclo: 7 },
-  { codigo: "CUR50", nombre: "Investigación Cuantitativa con Modelos Multivariados", creditos: 3, estado: "bloqueado", requisitos: ["Investigación Cuantitativa de Mercados"], precedentes: [], ciclo: 7 },
-  { codigo: "CUR51", nombre: "Metodología de la Investigación", creditos: 3, estado: "bloqueado", requisitos: ["105 créditos aprobados"], precedentes: [], ciclo: 7 },
-  { codigo: "CUR52", nombre: "Taller: Desarrollo de Competencias Personales IV", creditos: 1, estado: "bloqueado", requisitos: ["Taller: Desarrollo de Competencias Personales III"], precedentes: [], ciclo: 7 },
+  // CUARTO CICLO
+  { ciclo: 4, nombre: "Comunicaciones del Marketing", creditos: 3, prereq: ["Comportamiento del Consumidor"] },
+  { ciclo: 4, nombre: "Electivo I", creditos: 3, prereq: ["Según Electivo"] },
+  { ciclo: 4, nombre: "Finanzas I", creditos: 4, prereq: ["Contabilidad General", "Cálculo I"] },
+  { ciclo: 4, nombre: "Gestión del Capital Humano", creditos: 3, prereq: ["Teoría y Diseño Organizacional"] },
+  { ciclo: 4, nombre: "Estadística Inferencial", creditos: 5, prereq: ["Estadística y Probabilidades"] },
+  { ciclo: 4, nombre: "Microeconomía", creditos: 4, prereq: ["Economía General"] },
+  { ciclo: 4, nombre: "Taller: Desarrollo de Competencias Profesionales II", creditos: 1, prereq: ["Taller: Desarrollo de Competencias Profesionales I"] },
 
-  // CICLO 8
-  { codigo: "CUR53", nombre: "Electivo VI", creditos: 3, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 8 },
-  { codigo: "CUR54", nombre: "Electivo Internacional I", creditos: 1.5, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 8 },
-  { codigo: "CUR55", nombre: "Electivo Internacional II", creditos: 1.5, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 8 },
-  { codigo: "CUR56", nombre: "Entrepreneurship", creditos: 4, estado: "bloqueado", requisitos: ["140"], precedentes: [], ciclo: 8 },
-  { codigo: "CUR57", nombre: "Gerencia de Operaciones", creditos: 3, estado: "bloqueado", requisitos: ["100"], precedentes: [], ciclo: 8 },
-  { codigo: "CUR58", nombre: "Global Marketing", creditos: 4, estado: "bloqueado", requisitos: ["140"], precedentes: [], ciclo: 8 },
-  { codigo: "CUR59", nombre: "Inteligencia de Negocios Aplicada", creditos: 4, estado: "bloqueado", requisitos: ["Investigación Cuantitativa de Mercados"], precedentes: [], ciclo: 8 },
-  { codigo: "CUR60", nombre: "Taller: Desarrollo de Competencias Profesionales IV", creditos: 1, estado: "bloqueado", requisitos: ["Taller: Desarrollo de Competencias Profesionales III"], precedentes: [], ciclo: 8 },
+  // QUINTO CICLO
+  { ciclo: 5, nombre: "Análisis de Datos II", creditos: 3, prereq: ["Análisis de Datos I", "Estadística Inferencial"] },
+  { ciclo: 5, nombre: "Electivo II", creditos: 3, prereq: ["Según Electivo"] },
+  { ciclo: 5, nombre: "Electivo III", creditos: 3, prereq: ["Según Electivo"] },
+  { ciclo: 5, nombre: "Estrategias de Segmentación y Posicionamiento", creditos: 4, prereq: ["80 créditos aprobados", "Comportamiento del Consumidor"] },
+  { ciclo: 5, nombre: "Investigación Cualitativa de Mercados", creditos: 4, prereq: ["Estadística Inferencial", "Comportamiento del Consumidor"] },
+  { ciclo: 5, nombre: "Finanzas II", creditos: 4, prereq: ["Finanzas I"] },
+  { ciclo: 5, nombre: "Taller: Desarrollo de Competencias Personales III", creditos: 1, prereq: ["Taller: Desarrollo de Competencias Personales II"] },
 
-  // CICLO 9
-  { codigo: "CUR61", nombre: "Electivo VII", creditos: 3, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 9 },
-  { codigo: "CUR62", nombre: "Electivo VIII", creditos: 3, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 9 },
-  { codigo: "CUR63", nombre: "Electivo IX", creditos: 3, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 9 },
-  { codigo: "CUR64", nombre: "Electivo X", creditos: 3, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 9 },
-  { codigo: "CUR65", nombre: "Electivo XI", creditos: 3, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 9 },
-  { codigo: "CUR66", nombre: "E - Marketing", creditos: 3, estado: "bloqueado", requisitos: ["Comunicaciones del Marketing"], precedentes: [], ciclo: 9 },
-  { codigo: "CUR67", nombre: "Taller: Desarrollo de Competencias Personales V", creditos: 1, estado: "bloqueado", requisitos: ["Taller: Desarrollo de Competencias Personales IV"], precedentes: [], ciclo: 9 },
-  { codigo: "CUR68", nombre: "Trabajo de Tesis I", creditos: 3, estado: "bloqueado", requisitos: ["140", "Metodología de la Investigación"], precedentes: [], ciclo: 9 },
+  // SEXTO CICLO
+  { ciclo: 6, nombre: "Canales y Estrategias de Distribución", creditos: 4, prereq: ["Estrategias de Segmentación y Posicionamiento"] },
+  { ciclo: 6, nombre: "Costeo y Estrategias de Precios", creditos: 4, prereq: ["Costos y Presupuestos"] },
+  { ciclo: 6, nombre: "Derecho Empresarial", creditos: 4, prereq: ["80 créditos aprobados"] },
+  { ciclo: 6, nombre: "Investigación Cuantitativa de Mercados", creditos: 4, prereq: ["Investigación Cualitativa de Mercados"] },
+  { ciclo: 6, nombre: "Gestión de Proyectos de Lanzamiento de Producto", creditos: 4, prereq: ["Estrategias de Segmentación y Posicionamiento"] },
+  { ciclo: 6, nombre: "Marketing de Servicios y Retail", creditos: 4, prereq: ["Estrategias de Segmentación y Posicionamiento"] },
+  { ciclo: 6, nombre: "Taller: Desarrollo de Competencias Profesionales III", creditos: 1, prereq: ["Taller: Desarrollo de Competencias Profesionales II"] },
 
-  // CICLO 10
-  { codigo: "CUR69", nombre: "Branding", creditos: 3, estado: "bloqueado", requisitos: ["Comunicaciones del Marketing"], precedentes: [], ciclo: 10 },
-  { codigo: "CUR70", nombre: "Dirección Estratégica de Marketing", creditos: 4, estado: "bloqueado", requisitos: ["175"], precedentes: [], ciclo: 10 },
-  { codigo: "CUR71", nombre: "Electivo XII", creditos: 3, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 10 },
-  { codigo: "CUR72", nombre: "Electivo XIII", creditos: 3, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 10 },
-  { codigo: "CUR73", nombre: "Electivo XIV", creditos: 3, estado: "bloqueado", requisitos: [], precedentes: [], ciclo: 10 },
-  { codigo: "CUR74", nombre: "Taller: Desarrollo de Competencias Profesionales V", creditos: 1, estado: "bloqueado", requisitos: ["Taller: Desarrollo de Competencias Profesionales IV"], precedentes: [], ciclo: 10 },
-  { codigo: "CUR75", nombre: "Trabajo de Tesis II", creditos: 3, estado: "bloqueado", requisitos: ["Trabajo de Tesis I"], precedentes: [], ciclo: 10 }
+  // SEPTIMO CICLO
+  { ciclo: 7, nombre: "Electivo IV", creditos: 3, prereq: ["Según Electivo"] },
+  { ciclo: 7, nombre: "Electivo V", creditos: 3, prereq: ["Según Electivo"] },
+  { ciclo: 7, nombre: "Formulación y Evaluación de Proyectos", creditos: 4, prereq: ["Finanzas II", "Costos y Presupuestos"] },
+  { ciclo: 7, nombre: "Gestión de Ventas", creditos: 3, prereq: ["Investigación Cualitativa de Mercados"] },
+  { ciclo: 7, nombre: "Investigación Cuantitativa con Modelos Multivariados", creditos: 3, prereq: ["Investigación Cuantitativa de Mercados"] },
+  { ciclo: 7, nombre: "Metodología de la Investigación", creditos: 3, prereq: ["105 créditos aprobados"] },
+  { ciclo: 7, nombre: "Taller: Desarrollo de Competencias Personales IV", creditos: 1, prereq: ["Taller: Desarrollo de Competencias Personales III"] },
+
+  // OCTAVO CICLO
+  { ciclo: 8, nombre: "Electivo VI", creditos: 3, prereq: ["Según Electivo"] },
+  { ciclo: 8, nombre: "Electivo Internacional I", creditos: 1.5, prereq: ["Según Electivo"] },
+  { ciclo: 8, nombre: "Electivo Internacional II", creditos: 1.5, prereq: ["Según Electivo"] },
+  { ciclo: 8, nombre: "Entrepreneurship", creditos: 4, prereq: ["140 créditos aprobados"] },
+  { ciclo: 8, nombre: "Gerencia de Operaciones", creditos: 3, prereq: ["100 créditos aprobados"] },
+  { ciclo: 8, nombre: "Global Marketing", creditos: 4, prereq: ["140 créditos aprobados"] },
+  { ciclo: 8, nombre: "Inteligencia de Negocios Aplicada", creditos: 4, prereq: ["Investigación Cuantitativa de Mercados"] },
+  { ciclo: 8, nombre: "Taller: Desarrollo de Competencias Profesionales IV", creditos: 1, prereq: ["Taller: Desarrollo de Competencias Profesionales III"] },
+
+  // NOVENO CICLO
+  { ciclo: 9, nombre: "Electivo VII", creditos: 3, prereq: ["Según Electivo"] },
+  { ciclo: 9, nombre: "Electivo VIII", creditos: 3, prereq: ["Según Electivo"] },
+  { ciclo: 9, nombre: "Electivo IX", creditos: 3, prereq: ["Según Electivo"] },
+  { ciclo: 9, nombre: "Electivo X", creditos: 3, prereq: ["Según Electivo"] },
+  { ciclo: 9, nombre: "Electivo XI", creditos: 3, prereq: ["Según Electivo"] },
+  { ciclo: 9, nombre: "E - Marketing", creditos: 3, prereq: ["Comunicaciones del Marketing"] },
+  { ciclo: 9, nombre: "Taller: Desarrollo de Competencias Personales V", creditos: 1, prereq: ["Taller: Desarrollo de Competencias Personales IV"] },
+  { ciclo: 9, nombre: "Trabajo de Tesis I", creditos: 3, prereq: ["140 créditos aprobados", "Metodología de la Investigación"] },
+
+  // DÉCIMO CICLO
+  { ciclo: 10, nombre: "Branding", creditos: 3, prereq: ["Comunicaciones del Marketing"] },
+  { ciclo: 10, nombre: "Dirección Estratégica de Marketing", creditos: 4, prereq: ["175 créditos aprobados"] },
+  { ciclo: 10, nombre: "Electivo XII", creditos: 3, prereq: ["Según Electivo"] },
+  { ciclo: 10, nombre: "Electivo XIII", creditos: 3, prereq: ["Según Electivo"] },
+  { ciclo: 10, nombre: "Electivo XIV", creditos: 3, prereq: ["Según Electivo"] },
+  { ciclo: 10, nombre: "Taller: Desarrollo de Competencias Profesionales V", creditos: 1, prereq: ["Taller: Desarrollo de Competencias Profesionales IV"] },
+  { ciclo: 10, nombre: "Trabajo de Tesis II", creditos: 3, prereq: ["Trabajo de Tesis I"] },
 ];
 
-const creditosTotales = cursos.reduce((sum, c) => sum + c.creditos, 0);
-let creditosAprobados = 0;
+const CURSOS = CURSOS_RAW.map((c) => ({
+  ...c,
+  id: `c${c.ciclo}-${slug(c.nombre)}`,
+}));
 
-const estadoGuardado = JSON.parse(localStorage.getItem("estadoCursos")) || {};
-cursos.forEach(c => {
-  if (estadoGuardado[c.codigo]) {
-    c.estado = estadoGuardado[c.codigo];
+const STORAGE_KEY = "malla-adyma-progreso";
+
+// -------- estado (aprobado / no aprobado) --------
+function cargarEstado() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+  } catch {
+    return {};
   }
-});
+}
 
-function actualizarVista() {
-  creditosAprobados = 0;
-  const malla = document.getElementById("malla");
-  malla.innerHTML = "";
+let estado = cargarEstado();
 
-  for (let ciclo = 1; ciclo <= 10; ciclo++) {
-    const columna = document.createElement("div");
-    columna.className = "columna";
+function guardarEstado() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(estado));
+}
 
-    const titulo = document.createElement("h2");
-    titulo.textContent = `Ciclo ${ciclo}`;
-    columna.appendChild(titulo);
+function estaAprobado(curso) {
+  return !!estado[curso.id];
+}
 
-    cursos.filter(c => c.ciclo === ciclo).forEach(curso => {
-      const div = document.createElement("div");
-      div.className = "curso";
-      div.textContent = `${curso.nombre} (${curso.creditos} cr)`;
+function toggleAprobado(curso) {
+  estado[curso.id] = !estado[curso.id];
+  guardarEstado();
+  render();
+}
 
-      if (curso.estado === "aprobado") {
-        div.classList.add("aprobado");
-        creditosAprobados += curso.creditos;
-      } else if (!puedeDesbloquear(curso)) {
-        div.classList.add("bloqueado");
-      }
+// -------- cálculo de créditos --------
+const CURSOS_CON_CREDITO = CURSOS.filter((c) => c.ciclo >= 1); // ciclo 0 no suma
+const CREDITOS_TOTALES = CURSOS_CON_CREDITO.reduce((sum, c) => sum + c.creditos, 0);
 
-      div.onclick = () => {
-        if (curso.estado === "aprobado") {
-          curso.estado = "bloqueado";
-          creditosAprobados -= curso.creditos;
-        } else if (puedeDesbloquear(curso)) {
-          curso.estado = "aprobado";
-          creditosAprobados += curso.creditos;
-        }
-        guardarProgreso();
-        actualizarVista();
-      };
+function creditosAprobados() {
+  return CURSOS_CON_CREDITO.reduce((sum, c) => sum + (estaAprobado(c) ? c.creditos : 0), 0);
+}
 
-      columna.appendChild(div);
+function fmtCreditos(n) {
+  return Number.isInteger(n) ? String(n) : n.toFixed(1).replace(/\.0$/, "");
+}
+
+// -------- render --------
+function render() {
+  const aprobados = creditosAprobados();
+  const pendientes = CREDITOS_TOTALES - aprobados;
+  const pct = CREDITOS_TOTALES ? (aprobados / CREDITOS_TOTALES) * 100 : 0;
+
+  document.getElementById("pct-label").textContent = `${pct.toFixed(1)}%`;
+  document.getElementById("barra-fill").style.width = `${pct}%`;
+  document.getElementById("creditos-totales").textContent = fmtCreditos(CREDITOS_TOTALES);
+  document.getElementById("creditos-aprobados").textContent = fmtCreditos(aprobados);
+  document.getElementById("creditos-pendientes").textContent = fmtCreditos(pendientes);
+
+  const cursosCompletados = CURSOS_CON_CREDITO.filter(estaAprobado).length;
+  document.getElementById("cursos-label").textContent =
+    `${cursosCompletados} / ${CURSOS_CON_CREDITO.length} cursos`;
+
+  renderCiclos();
+  renderRuta(pct);
+}
+
+function renderCiclos() {
+  const cont = document.getElementById("malla");
+  cont.innerHTML = "";
+
+  const ciclos = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+  ciclos.forEach((n) => {
+    const cursosDelCiclo = CURSOS.filter((c) => c.ciclo === n);
+    if (!cursosDelCiclo.length) return;
+
+    const totalCiclo = cursosDelCiclo.reduce((s, c) => s + c.creditos, 0);
+    const aprobCiclo = cursosDelCiclo.reduce((s, c) => s + (estaAprobado(c) ? c.creditos : 0), 0);
+    const pctCiclo = totalCiclo ? (aprobCiclo / totalCiclo) * 100 : 0;
+
+    const col = document.createElement("section");
+    col.className = "columna";
+    col.style.setProperty("--ciclo-hue", huePorCiclo(n));
+
+    col.innerHTML = `
+      <header class="columna-header">
+        <span class="columna-num">${n === 0 ? "Intro" : n}</span>
+        <h2>${n === 0 ? "Ciclo introductorio" : `Ciclo ${n}`}</h2>
+        <span class="columna-creditos">${fmtCreditos(totalCiclo)} cr.</span>
+      </header>
+      <div class="columna-progreso"><div class="columna-progreso-fill" style="width:${pctCiclo}%"></div></div>
+    `;
+
+    const lista = document.createElement("div");
+    lista.className = "lista-cursos";
+
+    cursosDelCiclo.forEach((curso) => {
+      lista.appendChild(renderCurso(curso));
     });
 
-    malla.appendChild(columna);
+    col.appendChild(lista);
+    cont.appendChild(col);
+  });
+}
+
+function renderCurso(curso) {
+  const aprobado = estaAprobado(curso);
+  const tienePrereq = curso.prereq.length > 0;
+
+  const card = document.createElement("article");
+  card.className = "curso" + (aprobado ? " aprobado" : "");
+
+  const main = document.createElement("button");
+  main.type = "button";
+  main.className = "curso-main";
+  main.setAttribute("aria-pressed", String(aprobado));
+  main.innerHTML = `
+    <span class="curso-check" aria-hidden="true"></span>
+    <span class="curso-info">
+      <span class="curso-nombre">${curso.nombre}</span>
+      <span class="curso-creditos">${fmtCreditos(curso.creditos)} cr.</span>
+    </span>
+  `;
+  main.addEventListener("click", () => toggleAprobado(curso));
+  card.appendChild(main);
+
+  if (tienePrereq) {
+    const details = document.createElement("details");
+    details.className = "curso-prereq";
+
+    const summary = document.createElement("summary");
+    summary.textContent = "Prerrequisitos";
+    details.appendChild(summary);
+
+    const ul = document.createElement("ul");
+    curso.prereq.forEach((p) => {
+      const li = document.createElement("li");
+      li.textContent = p;
+      ul.appendChild(li);
+    });
+    details.appendChild(ul);
+
+    card.appendChild(details);
   }
 
-  document.getElementById("creditos-aprobados").textContent = creditosAprobados;
-  document.getElementById("creditos-faltantes").textContent = creditosTotales - creditosAprobados;
-  const porcentaje = ((creditosAprobados / creditosTotales) * 100).toFixed(1);
-  document.getElementById("barra").style.width = `${porcentaje}%`;
-  document.getElementById("porcentaje").textContent = `${porcentaje}% completado`;
+  return card;
 }
 
-function puedeDesbloquear(curso) {
-  const requisitosOk = curso.requisitos.every(req =>
-    isNaN(req)
-      ? cursos.find(c => c.nombre === req)?.estado === "aprobado"
-      : creditosAprobados >= parseInt(req)
-  );
-
-  const precedentesOk = curso.precedentes.every(pre =>
-    cursos.find(c => c.nombre === pre && (c.estado === "aprobado" || c.estado === "llevado"))
-  );
-
-  return requisitosOk && precedentesOk;
+function huePorCiclo(n) {
+  // recorre de azul (ciclo 1) a ámbar (ciclo 10); intro en gris
+  if (n === 0) return 210;
+  const t = (n - 1) / 9;
+  return Math.round(210 - t * 155); // 210 -> 55
 }
 
-function guardarProgreso() {
-  const estado = {};
-  cursos.forEach(c => (estado[c.codigo] = c.estado));
-  localStorage.setItem("estadoCursos", JSON.stringify(estado));
+function renderRuta(pctGlobal) {
+  const ruta = document.getElementById("ruta");
+  ruta.innerHTML = "";
+  for (let n = 1; n <= 10; n++) {
+    const cursosDelCiclo = CURSOS_CON_CREDITO.filter((c) => c.ciclo === n);
+    const totalCiclo = cursosDelCiclo.reduce((s, c) => s + c.creditos, 0);
+    const aprobCiclo = cursosDelCiclo.reduce((s, c) => s + (estaAprobado(c) ? c.creditos : 0), 0);
+    const completo = totalCiclo > 0 && aprobCiclo >= totalCiclo;
+
+    const paso = document.createElement("div");
+    paso.className = "paso" + (completo ? " completo" : "");
+    paso.style.setProperty("--ciclo-hue", huePorCiclo(n));
+    paso.innerHTML = `<span>${n}</span>`;
+    paso.title = `Ciclo ${n}: ${fmtCreditos(aprobCiclo)} / ${fmtCreditos(totalCiclo)} cr.`;
+    ruta.appendChild(paso);
+  }
 }
 
-actualizarVista();
+render();
