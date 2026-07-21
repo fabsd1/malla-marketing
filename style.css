@@ -261,11 +261,12 @@ main {
 }
 
 .curso.bloqueado {
-  border-color: hsl(28, 75%, 62%);
-  background: hsl(32, 85%, 96%);
+  border-color: hsl(28, 80%, 55%);
+  background: hsl(32, 90%, 92%);
 }
 
-.curso.bloqueado .curso-nombre { color: hsl(24, 45%, 38%); }
+.curso.bloqueado .curso-nombre { color: hsl(24, 55%, 32%); }
+.curso.bloqueado .curso-creditos { color: hsl(24, 45%, 45%); }
 
 .curso-main {
   width: 100%;
@@ -417,6 +418,23 @@ footer {
   padding: 20px 24px 40px;
   color: var(--ink-soft);
   font-size: 12.5px;
+}
+
+.reiniciar-btn {
+  margin-top: 10px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.reiniciar-btn:hover {
+  border-color: hsl(0, 60%, 65%);
+  color: hsl(0, 55%, 45%);
 }
 
 /* ---------- responsive ---------- */

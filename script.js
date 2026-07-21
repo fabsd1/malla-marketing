@@ -314,3 +314,14 @@ function renderRuta(pctGlobal) {
 }
 
 render();
+
+const btnReiniciar = document.getElementById("reiniciar");
+if (btnReiniciar) {
+  btnReiniciar.addEventListener("click", () => {
+    const ok = confirm("¿Borrar todo tu progreso guardado en este navegador? Esta acción no se puede deshacer.");
+    if (!ok) return;
+    estado = {};
+    guardarEstado();
+    render();
+  });
+}
